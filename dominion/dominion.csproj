@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9B6D8D56-94E5-4244-AA69-378E5FBF7C9E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>dominion</RootNamespace>
+    <AssemblyName>dominion</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cooper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Curse.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Deck.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Disposal.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Enemy.cs" />
+    <Compile Include="Form1.Click.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gold.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Landtag.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Mansion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Market.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Me.cs" />
+    <Compile Include="Militia.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Mine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Moat.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PlayCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Province.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Remodel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Silver.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Smithy.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Supply.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UndergroundRepository.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Village.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Woodcutter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Workshop.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\61RmHTe9sPL.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ishidatami.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\カウント.jpg" />
+    <None Include="Resources\カウンター.png" />
+    <None Include="Resources\3_2.png" />
+    <None Include="Resources\pp_rn1_1.jpg" />
+    <None Include="Resources\pp_rn1_2.png" />
+    <None Include="Resources\s-ribbon0939.png" />
+    <None Include="Resources\s-ribbon0940.png" />
+    <None Include="Resources\s-ribbon0941.png" />
+    <None Include="Resources\s-ribbon0942.png" />
+    <None Include="bin\Release\resource\改築.jpg" />
+    <None Include="bin\Release\resource\議事堂.jpg" />
+    <None Include="bin\Release\resource\玉座の間.jpg" />
+    <None Include="bin\Release\resource\金貸し.jpg" />
+    <None Include="bin\Release\resource\研究所.jpg" />
+    <None Include="bin\Release\resource\工房.jpg" />
+    <None Include="bin\Release\resource\鉱山.jpg" />
+    <None Include="bin\Release\resource\宰相.jpg" />
+    <None Include="bin\Release\resource\市場.jpg" />
+    <None Include="bin\Release\resource\祝宴.jpg" />
+    <None Include="bin\Release\resource\祝祭.jpg" />
+    <None Include="bin\Release\resource\書庫.jpg" />
+    <None Include="bin\Release\resource\村.jpg" />
+    <None Include="bin\Release\resource\鍛冶屋.jpg" />
+    <None Include="bin\Release\resource\地下貯蔵庫.jpg" />
+    <None Include="bin\Release\resource\庭園.jpg" />
+    <None Include="bin\Release\resource\泥棒.jpg" />
+    <None Include="bin\Release\resource\冒険者.jpg" />
+    <None Include="bin\Release\resource\堀.jpg" />
+    <None Include="bin\Release\resource\魔女.jpg" />
+    <None Include="bin\Release\resource\密偵.jpg" />
+    <None Include="bin\Release\resource\民兵.jpg" />
+    <None Include="bin\Release\resource\木こり.jpg" />
+    <None Include="bin\Release\resource\役人.jpg" />
+    <None Include="bin\Release\resource\礼拝堂.jpg" />
+    <None Include="Resources\back.jpg" />
+    <Content Include="Resources\ギルド.txt" />
+    <Content Include="Resources\プロモ.txt" />
+    <None Include="Resources\呪い.jpg" />
+    <None Include="Resources\屋敷.jpg" />
+    <None Include="Resources\公領.jpg" />
+    <Content Include="Resources\収穫祭.txt" />
+    <Content Include="Resources\基本.txt" />
+    <None Include="Resources\属州.jpg" />
+    <Content Include="Resources\暗黒時代.txt" />
+    <Content Include="Resources\海辺.txt" />
+    <Content Include="Resources\異郷.txt" />
+    <Content Include="Resources\繁栄.txt" />
+    <None Include="Resources\金貨.jpg" />
+    <None Include="Resources\銀貨.jpg" />
+    <None Include="Resources\銅貨.jpg" />
+    <Content Include="Resources\錬金術.txt" />
+    <Content Include="Resources\陰謀.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
