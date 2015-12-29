@@ -1,6 +1,7 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class AI : MonoBehaviour {
 
@@ -9,8 +10,35 @@ public class AI : MonoBehaviour {
   void SelectTrash(){
     player.selectMode = true;
     while (player.HandsCount() - player.CountSelected() > 3){
-      int ind = (int)(Random.value * (player.HandsCount() - player.CountSelected()));
-      if(!player.hands[ind].GetComponent<Card>().IsSelected)player.hands[ind].GetComponent<Card>().Selected();
+      bool flag = false;
+      int action=0;
+      int actionNum = 0;
+      List<GameObject> actions = new List<GameObject>();
+      foreach (var card in player.hands){
+        if (!card.GetComponent<Card>().IsAction && !card.GetComponent<Card>().IsMoney && !flag && !card.GetComponent<Card>().IsSelected){
+          card.GetComponent<Card>().Selected();
+          flag = true;
+        }
+        if (card.GetComponent<Card>().IsAction && !card.GetComponent<Card>().IsSelected){
+          actions.Add(card);
+          action += card.GetComponent<Card>().Action;
+          actionNum++;
+        }
+      }
+      if (!flag){
+        if (action < actionNum && actions.Count > 0){
+          actions[0].GetComponent<Card>().Selected();
+        } else{
+          GameObject minObj = player.hands[0];
+          int minMoney = 100;
+          foreach (var card in player.hands){
+            if (minMoney < card.GetComponent<Card>().Money){
+              minObj = card;
+            }
+          }
+          minObj.GetComponent<Card>().Selected();
+        }
+      }
     }
     player.selectMode = false;
   }
