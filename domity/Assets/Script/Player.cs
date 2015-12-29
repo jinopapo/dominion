@@ -18,6 +18,7 @@ public class Player : MonoBehaviour{
   public List<GameObject> selected;
   public bool selectMode;
   public List<GameObject> field;
+  public Supply supply;
   List<GameObject> remove;
   List<GameObject> otherPlayers = new List<GameObject>();
   bool turn;
@@ -381,6 +382,7 @@ public class Player : MonoBehaviour{
     cost = 0;
     field = transform.parent.GetComponent<GameMaster>().field;
     remove = transform.parent.GetComponent<GameMaster>().remove;
+    supply = transform.parent.GetComponent<GameMaster>().supply.GetComponent<Supply>();
     InitDeck();
     Draw(5);
     HandTrim();

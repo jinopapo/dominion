@@ -6,7 +6,7 @@ using System.Linq;
 public class GameMaster : MonoBehaviour {
 
 	GameObject[] players;
-	[SerializeField] GameObject supply;
+	public GameObject supply;
   [SerializeField] GameObject AI;
 	GameObject mainPlayer;
 	int nowPlayer;
