@@ -109,8 +109,8 @@ public class Supply : MonoBehaviour {
 		mansions = RemoveBoughtCard (mansions);
 		landtags = RemoveBoughtCard (landtags);
 		provinces = RemoveBoughtCard (provinces);
-		foreach (var s in supplys) {
-			RemoveBoughtCard (s);
+    for(int i=0;i<10;i++) {
+      supplys[i] = RemoveBoughtCard (supplys[i]);
 		}
 	}
 }

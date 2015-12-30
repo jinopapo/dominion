@@ -7,11 +7,54 @@ public class AI : MonoBehaviour {
 
   Player player;
 
+  int CompActionCard(GameObject a,GameObject b){
+    if (a.GetComponent<Card>().Action < b.GetComponent<Card>().Action){
+      return 1;
+    } else if (a.GetComponent<Card>().Action > b.GetComponent<Card>().Action){
+      return -1;
+    } else{
+      if (a.GetComponent<Card>().Draw < b.GetComponent<Card>().Draw){
+        return 1;
+      } else if (a.GetComponent<Card>().Draw > b.GetComponent<Card>().Draw){
+        return -1;
+      } else{
+        return 0;
+      }
+    }
+  }
+
+  bool ActionInHand(){
+    foreach (var obj in player.hands){
+      if (obj.GetComponent<Card>().IsAction){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void PlayAction(){
+    List<GameObject> plist = new List<GameObject>();
+    if(ActionInHand()){
+      foreach (var obj in player.hands){
+        if (obj.GetComponent<Card>().IsAction){
+          plist.Add(obj);
+        }
+      }
+    }
+    plist.Sort(CompActionCard);
+    foreach(var card in plist){
+      card.GetComponent<Card>().Play();
+      print("player:" + card.name);
+      if (player.Action <= 0)
+        break;
+    }
+  }
+
   void SelectTrash(){
     player.selectMode = true;
     while (player.HandsCount() - player.CountSelected() > 3){
       bool flag = false;
-      int action=0;
+      int action = 0;
       int actionNum = 0;
       List<GameObject> actions = new List<GameObject>();
       foreach (var card in player.hands){
@@ -43,7 +86,7 @@ public class AI : MonoBehaviour {
     player.selectMode = false;
   }
 
-  void GetDeckInfo(List<GameObject> list,ref int a,ref int aa,ref int m,ref int am,ref int d){
+  void GetDeckInfo(List<GameObject> list, ref int a, ref int aa, ref int m, ref int am, ref int d){
     foreach (var obj in list){
       Card card = obj.GetComponent<Card>();
       if (card.IsMoney){
@@ -58,7 +101,7 @@ public class AI : MonoBehaviour {
     }
   }
 
-  bool BuyAction(int ave,int num){
+  bool BuyAction(int ave, int num){
     string name = "";
     if (player.Money >= 5){
       name = "Market";
@@ -78,15 +121,18 @@ public class AI : MonoBehaviour {
         }
       }
     }
-    return name == "";
+    print("buy:" + name);
+    return name != "";
   }
 
   void BuyMoney(){
     if (player.Money >= 6){
+      print("buy:gold");
       foreach (var obj in  player.supply.golds){
         obj.GetComponent<Card>().Purued(player.gameObject);
       }
     } else if (player.Money >= 3){
+      print("buy:silver");
       foreach (var obj in  player.supply.slivers){
         obj.GetComponent<Card>().Purued(player.gameObject);
       }
@@ -95,6 +141,7 @@ public class AI : MonoBehaviour {
 
   void BuyVpoint(){
     if (player.Money >= 8){
+      print("buy:province");
       player.supply.provinces[0].GetComponent<Card>().Purued(player.gameObject);
     }
   }
@@ -127,19 +174,22 @@ public class AI : MonoBehaviour {
     }
   }
 
-	public void Play(){
+  public void Play(){
+    PlayAction();
     BuyCard();
-		gameObject.GetComponent<Player> ().EndTurn ();
-		transform.GetComponentInParent<GameMaster> ().NextPlayer ();
+    if (gameObject.GetComponent<Player>().Turn){
+      transform.GetComponentInParent<GameMaster>().NextPlayer();
+    }
+    gameObject.GetComponent<Player>().EndTurn();
 	}
 
-	// Use this for initialization
-	void Start () {
+  // Use this for initialization
+  void Start() {
     player = gameObject.GetComponent<Player>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+  // Update is called once per frame
+  void Update() {
     foreach (var card in player.field){
       if (card.GetComponent<Militia>() && card.GetComponent<Card>().Event){
         if (!player.DiscardAttackEnd(3)){
