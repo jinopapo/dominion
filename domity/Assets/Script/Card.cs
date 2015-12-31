@@ -143,6 +143,9 @@ public class Card : MonoBehaviour {
 
   public void Move(Vector3 position, float t = (float)0.5, bool local = true){
     if (position != endPosition) {
+      if (owner != null){
+        transform.rotation = owner.transform.rotation;
+      }
       time = t;
       startPosition = transform.localPosition;
       if (local) {

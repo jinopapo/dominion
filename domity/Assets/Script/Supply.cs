@@ -19,13 +19,13 @@ public class Supply : MonoBehaviour {
 	[SerializeField] Vector3 landtagPosition;
 	[SerializeField] Vector3 provincePositon;
 	[SerializeField] List<Vector3> supplyPositions;
-	List<List<GameObject>> supplys = new List<List<GameObject>>();
-	List<GameObject> coppers = new List<GameObject>();
-	List<GameObject> slivers = new List<GameObject>();
-	List<GameObject> golds = new List<GameObject>();
-	List<GameObject> landtags = new List<GameObject>();
-	List<GameObject> mansions = new List<GameObject>();
-	List<GameObject> provinces = new List<GameObject>();
+	public List<List<GameObject>> supplys = new List<List<GameObject>>();
+	public List<GameObject> coppers = new List<GameObject>();
+	public List<GameObject> slivers = new List<GameObject>();
+	public List<GameObject> golds = new List<GameObject>();
+	public List<GameObject> landtags = new List<GameObject>();
+	public List<GameObject> mansions = new List<GameObject>();
+	public List<GameObject> provinces = new List<GameObject>();
 
 	List<GameObject> RemoveBoughtCard(List<GameObject> list){
 		return new List<GameObject>(list.Where(c => c.GetComponent<Card>().Owner == null));
@@ -95,6 +95,7 @@ public class Supply : MonoBehaviour {
 			supplys.Add(new List<GameObject>());
 			for (int i = 0; i < 10; i++) {
 				GameObject clone = s.val.GetComponent<Card> ().SetInitSupply (s.pos, transform, main);
+        clone.name = s.val.name;
 				supplys[supplys.Count-1].Add (clone);
 			}
 		}
@@ -108,8 +109,8 @@ public class Supply : MonoBehaviour {
 		mansions = RemoveBoughtCard (mansions);
 		landtags = RemoveBoughtCard (landtags);
 		provinces = RemoveBoughtCard (provinces);
-		foreach (var s in supplys) {
-			RemoveBoughtCard (s);
+    for(int i=0;i<10;i++) {
+      supplys[i] = RemoveBoughtCard (supplys[i]);
 		}
 	}
 }

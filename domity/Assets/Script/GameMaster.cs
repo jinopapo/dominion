@@ -6,10 +6,11 @@ using System.Linq;
 public class GameMaster : MonoBehaviour {
 
 	GameObject[] players;
-	[SerializeField] GameObject supply;
+	public GameObject supply;
   [SerializeField] GameObject AI;
 	GameObject mainPlayer;
 	int nowPlayer;
+  bool[] play;
   public List<GameObject> field;
   public List<GameObject> remove;
 	public GameObject player;
@@ -20,7 +21,9 @@ public class GameMaster : MonoBehaviour {
 
 	void Awake(){
 		players = new GameObject[4];
+    play = new bool[4];
 		for (int i = 0; i < 4; i++) {
+      play[i] = false;
       GameObject clone;
       if(i==0)clone = (GameObject)Instantiate (player);
       else clone = (GameObject)Instantiate (AI);
@@ -41,11 +44,14 @@ public class GameMaster : MonoBehaviour {
 		transform.FindChild ("TurnEnd").GetComponent<TurnEnd> ().Player = players[0].GetComponent<Player>();
 		players [0].GetComponent<Player> ().StartTurn ();
 		nowPlayer = 0;
+    play[0] = true;
 	}
 
 	public void NextPlayer(){
+    play[nowPlayer] = false;
 		nowPlayer++;
 		nowPlayer = nowPlayer % 4;
+    play[nowPlayer] = true;
 		players [nowPlayer].GetComponent<Player>().StartTurn();
 	}
 
@@ -61,8 +67,10 @@ public class GameMaster : MonoBehaviour {
 				p.val.GetComponent<Player> ().EndTurn ();
         print(p.ind.ToString() + " " + p.val.GetComponent<Player> ().CountVpoint ().ToString());
 			}
-		}else if (nowPlayer != 0) {
-			players [nowPlayer].GetComponent<AI> ().Play ();
 		}
+    if (nowPlayer != 0) {
+      print(nowPlayer);
+      players[nowPlayer].GetComponent<AI>().Play();
+		} 
 	}
 }
