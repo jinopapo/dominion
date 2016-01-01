@@ -7,6 +7,15 @@ public class AI : MonoBehaviour {
 
   Player player;
 
+  bool IsMove(){
+    foreach (var obj in player.field){
+      if (obj.GetComponent<Card>().IsMove){
+        return true;
+      }
+    }
+    return false;
+  }
+
   int  CountSupply(){
     Supply s = player.supply;
     int end = 0;
@@ -143,18 +152,23 @@ public class AI : MonoBehaviour {
     } else if (player.Money >= 3){
       name = "Village";
     }
+    bool flag = true;
     foreach (var objs in player.supply.supplys){
+      print(objs.Count);
       foreach (var obj in objs){
         if (obj.name == name){
           obj.GetComponent<Card>().Purued(player.gameObject);
+          flag = false;
         }
       }
     }
+    if (flag)
+      name = "";
     print("buy:" + name);
     return name == "";
   }
 
-  void BuyMoney(){
+  bool BuyMoney(){
     if (player.Money >= 6){
       print("buy:gold");
       foreach (var obj in  player.supply.golds){
@@ -165,10 +179,13 @@ public class AI : MonoBehaviour {
       foreach (var obj in  player.supply.slivers){
         obj.GetComponent<Card>().Purued(player.gameObject);
       }
+    } else{
+      return false;
     }
+    return true;
   }
 
-  void BuyVpoint(){
+  bool BuyVpoint(){
     if (player.Money >= 8){
       print("buy:province");
       player.supply.provinces[0].GetComponent<Card>().Purued(player.gameObject);
@@ -179,12 +196,14 @@ public class AI : MonoBehaviour {
       } else if (player.Money >= 2){
         print("buy:mansion");
         player.supply.mansions[0].GetComponent<Card>().Purued(player.gameObject);
-         
       }
+    } else{
+      return false;
     }
+    return true;
   }
 
-  void BuyCard(){
+  bool BuyCard(){
     int actionCard = 0;
     int aveMoney = 0;
     int moneyCard = 0;
@@ -201,24 +220,31 @@ public class AI : MonoBehaviour {
     }
     if (player.Money < 8 || CountSupply() < 2){
       if (aveAction + 1 > actionCard / (deckNum / 5)){
-        if (!BuyAction(aveAction, actionCard / (deckNum / 5))){
-          BuyMoney();
+        if (BuyAction(aveAction, actionCard / (deckNum / 5))){
+          return BuyMoney();
+        } else{
+          return true;
         }
       } else{
-        BuyMoney();
+        return BuyMoney();
       }
     } else{
-      BuyVpoint();
+      return BuyVpoint();
     }
   }
 
   public void Play(){
-    PlayAction();
-    BuyCard();
-    if (gameObject.GetComponent<Player>().Turn){
-      transform.GetComponentInParent<GameMaster>().NextPlayer();
+    if (!IsMove()){
+      if (ActionInHand() && player.Action > 0){
+        PlayAction();
+    } else if (player.Purchase > 0 && BuyCard()){
+    } else{
+        if (gameObject.GetComponent<Player>().Turn){
+          transform.GetComponentInParent<GameMaster>().NextPlayer();
+      }
+        gameObject.GetComponent<Player>().EndTurn();
     }
-    gameObject.GetComponent<Player>().EndTurn();
+    }
 	}
 
   // Use this for initialization
@@ -228,6 +254,9 @@ public class AI : MonoBehaviour {
 	
   // Update is called once per frame
   void Update() {
+    if (player.Turn){
+      Play();
+    }
     foreach (var card in player.field){
       if (card.GetComponent<Militia>() && card.GetComponent<Card>().Event){
         if (!player.DiscardAttackEnd(3)){

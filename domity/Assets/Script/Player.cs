@@ -377,7 +377,7 @@ public class Player : MonoBehaviour{
 
   // Use this for initialization
   void Start(){
-    turn = true;
+    turn = false;
     selectMode = false;
     cost = 0;
     field = transform.parent.GetComponent<GameMaster>().field;
