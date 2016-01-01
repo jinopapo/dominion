@@ -78,6 +78,8 @@ public class Card : MonoBehaviour {
 
   public bool IsRemove { get { return state == InRemove; } }
 
+  public bool IsMove {get {return endPosition != transform.localPosition;}}
+
 
   private GameObject clone(Vector3 position, Quaternion rot){
     return (GameObject)Instantiate(perfab, position, rot);
@@ -151,7 +153,7 @@ public class Card : MonoBehaviour {
       if (local) {
         endPosition = position;
       } else {
-        endPosition = transform.TransformDirection(position);
+        endPosition = transform.InverseTransformDirection(position);
       }
       startTime = Time.timeSinceLevelLoad;
     }
@@ -167,7 +169,7 @@ public class Card : MonoBehaviour {
   }
 
   public bool IsPlay(){
-    if (state == InHand && owner == master.GetComponent<GameMaster>().MainPlayer && owner.GetComponent<Player>().IsPlay()) {
+    if (state == InHand /*&& owner == master.GetComponent<GameMaster>().MainPlayer*/ && owner.GetComponent<Player>().IsPlay()) {
       if (isAction && owner.GetComponent<Player>().Action > 0) {
         return true;
       }

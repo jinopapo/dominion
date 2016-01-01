@@ -68,9 +68,13 @@ public class GameMaster : MonoBehaviour {
         print(p.ind.ToString() + " " + p.val.GetComponent<Player> ().CountVpoint ().ToString());
 			}
 		}
-    if (nowPlayer != 0) {
-      print(nowPlayer);
-      players[nowPlayer].GetComponent<AI>().Play();
-		} 
+    /*if (nowPlayer != 0) {
+      if (play[nowPlayer]){
+        print(nowPlayer);
+        //players[nowPlayer].GetComponent<AI>().Play();
+        //players[nowPlayer].GetComponent<Player>().StartTurn();
+        play[nowPlayer] = false;
+      }
+		} */
 	}
 }
