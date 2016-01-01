@@ -28,6 +28,7 @@ public class Player : MonoBehaviour{
   bool getHand;
   int action;
   int money;
+  int actionMoney;
   int purchase;
   int cost;
 
@@ -201,6 +202,7 @@ public class Player : MonoBehaviour{
         money += card.Money;
       }
     }
+    money += actionMoney;
   }
 
   public int CountVpoint(){
@@ -316,6 +318,7 @@ public class Player : MonoBehaviour{
     getAction = false;
     getMoney = false;
     getVpoint = false;
+    actionMoney = 0;
     CountMoney();
   }
 
@@ -368,6 +371,7 @@ public class Player : MonoBehaviour{
     }
     if (!card.IsMoney) {
       money += card.Money;
+      actionMoney += card.Money;
     }
     purchase += card.Purchase;
     Draw(card.Draw);

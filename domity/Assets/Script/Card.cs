@@ -153,7 +153,7 @@ public class Card : MonoBehaviour {
       if (local) {
         endPosition = position;
       } else {
-        endPosition = transform.TransformDirection(position);
+        endPosition = transform.InverseTransformDirection(position);
       }
       startTime = Time.timeSinceLevelLoad;
     }

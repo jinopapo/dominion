@@ -154,7 +154,6 @@ public class AI : MonoBehaviour {
     }
     bool flag = true;
     foreach (var objs in player.supply.supplys){
-      print(objs.Count);
       foreach (var obj in objs){
         if (obj.name == name){
           obj.GetComponent<Card>().Purued(player.gameObject);
