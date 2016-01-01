@@ -7,6 +7,35 @@ public class AI : MonoBehaviour {
 
   Player player;
 
+  int  CountSupply(){
+    Supply s = player.supply;
+    int end = 0;
+    if (s.coppers.Count == 0) {
+      end++;
+    }
+    if (s.slivers.Count == 0) {
+      end++;
+    }
+    if (s.golds.Count == 0) {
+      end++;
+    }
+    if (s.landtags.Count == 0) {
+      end++;
+    }
+    if (s.mansions.Count == 0) {
+      end++;
+    }
+    if (s.provinces.Count == 0) {
+      end++;
+    }
+    foreach (var ss in s.supplys) {
+      if (ss.Count == 0) {
+        end++;
+      }
+    }
+    return end;
+  }
+
   int CompActionCard(GameObject a,GameObject b){
     if (a.GetComponent<Card>().Action < b.GetComponent<Card>().Action){
       return 1;
@@ -122,7 +151,7 @@ public class AI : MonoBehaviour {
       }
     }
     print("buy:" + name);
-    return name != "";
+    return name == "";
   }
 
   void BuyMoney(){
@@ -143,6 +172,15 @@ public class AI : MonoBehaviour {
     if (player.Money >= 8){
       print("buy:province");
       player.supply.provinces[0].GetComponent<Card>().Purued(player.gameObject);
+    } else if (CountSupply() >= 2){
+      if (player.Money >= 5){
+        print("buy:lnadtag");
+        player.supply.landtags[0].GetComponent<Card>().Purued(player.gameObject);
+      } else if (player.Money >= 2){
+        print("buy:mansion");
+        player.supply.mansions[0].GetComponent<Card>().Purued(player.gameObject);
+         
+      }
     }
   }
 
@@ -161,7 +199,7 @@ public class AI : MonoBehaviour {
     if (moneyCard != 0){
       aveMoney /= (deckNum / 5);
     }
-    if (player.Money < 8){
+    if (player.Money < 8 || CountSupply() < 2){
       if (aveAction + 1 > actionCard / (deckNum / 5)){
         if (!BuyAction(aveAction, actionCard / (deckNum / 5))){
           BuyMoney();
