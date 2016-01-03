@@ -34,13 +34,6 @@ public class Card : MonoBehaviour {
   GameObject master;
   bool eventFlag;
 
-  float time;
-
-  private float startTime;
-  private Vector3 startPosition;
-  private Vector3 endPosition;
-  public Vector3 movePoint;
-
   private Vector3 fieldPosition = new Vector3(20, -10, 0);
 
 
@@ -77,9 +70,6 @@ public class Card : MonoBehaviour {
   public bool IsTrash { get { return state == InTrash; } }
 
   public bool IsRemove { get { return state == InRemove; } }
-
-  public bool IsMove {get {return endPosition != transform.localPosition;}}
-
 
   private GameObject clone(Vector3 position, Quaternion rot){
     return (GameObject)Instantiate(perfab, position, rot);
@@ -144,19 +134,7 @@ public class Card : MonoBehaviour {
   }
 
   public void Move(Vector3 position, float t = (float)0.5, bool local = true){
-    if (position != endPosition) {
-      if (owner != null){
-        transform.rotation = owner.transform.rotation;
-      }
-      time = t;
-      startPosition = transform.localPosition;
-      if (local) {
-        endPosition = position;
-      } else {
-        endPosition = transform.InverseTransformDirection(position);
-      }
-      startTime = Time.timeSinceLevelLoad;
-    }
+    gameObject.GetComponent<CardMove>().Move(position, t, local);
   }
 
   public bool IsGet(Player buyer, bool isA, bool isM, bool isV){
@@ -169,7 +147,7 @@ public class Card : MonoBehaviour {
   }
 
   public bool IsPlay(){
-    if (state == InHand /*&& owner == master.GetComponent<GameMaster>().MainPlayer*/ && owner.GetComponent<Player>().IsPlay()) {
+    if (state == InHand && owner.GetComponent<Player>().IsPlay()) {
       if (isAction && owner.GetComponent<Player>().Action > 0) {
         return true;
       }
@@ -190,12 +168,6 @@ public class Card : MonoBehaviour {
   }
 
   public void Trash(){
-    /*if (state == InDeck) {
-			owner.GetComponent<Player> ().RemoveDeck (gameObject);
-		} else if (state == InHand) {
-			owner.GetComponent<Player> ().RemoveHand (gameObject);
-		}
-    	owner.GetComponent<Player>().AddTrash (gameObject);*/
     state = InTrash;
   }
 
@@ -213,11 +185,6 @@ public class Card : MonoBehaviour {
       gameObject.GetComponent<SpriteRenderer>().sprite = front;
     }
   }
-
-  /*public void TrashCard(Vector3 position){
-    state = InTrash;
-    Move (position, (float)0.3);
-  }*/
 
   public void SetDeck(Vector3 position){
     state = InDeck;
@@ -255,7 +222,6 @@ public class Card : MonoBehaviour {
   void Start() {
     playNow = false;
     eventCount = 0;
-    endPosition = transform.position;
     if (state == InDeck) {
       gameObject.GetComponent<SpriteRenderer>().sprite = back;
     } else {
@@ -266,14 +232,6 @@ public class Card : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    var diff = Time.timeSinceLevelLoad - startTime;
-    if (diff > time) {
-      transform.localPosition = endPosition;
-    }
-    if (endPosition != transform.localPosition) {
-      var rate = diff / time;
-      transform.localPosition = Vector3.Lerp(startPosition, endPosition, rate);
-    }
     if (eventCount == 0){
       eventFlag = false;
     }
