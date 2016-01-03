@@ -10,7 +10,7 @@ public class CardMove : MonoBehaviour {
 
   public bool IsMove {get {return endPosition != transform.localPosition;}}
 
-  public void Move(Vector3 position, float t = (float)0.5, bool local = true){
+  public void PositionUpdate(Vector3 position, float t = (float)0.5, bool local = true){
     GameObject owner = gameObject.GetComponent<Card>().Owner;
     if (position != endPosition) {
       if (owner != null){
@@ -27,14 +27,7 @@ public class CardMove : MonoBehaviour {
     }
   }
 
-	// Use this for initialization
-	void Awake () {
-    endPosition = transform.position;
-    startTime = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+  void Move(){
     var diff = Time.timeSinceLevelLoad - startTime;
     if (diff > time) {
       transform.localPosition = endPosition;
@@ -44,5 +37,16 @@ public class CardMove : MonoBehaviour {
       if(time != 0)rate = diff / time;
       transform.localPosition = Vector3.Lerp(startPosition, endPosition, rate);
     }
+  }
+
+	// Use this for initialization
+	void Awake () {
+    endPosition = transform.position;
+    startTime = 0;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+    Move();
 	}
 }
