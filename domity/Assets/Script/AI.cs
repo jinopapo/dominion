@@ -9,7 +9,7 @@ public class AI : MonoBehaviour {
 
   bool IsMove(){
     foreach (var obj in player.field){
-      if (obj.GetComponent<Card>().IsMove){
+      if (obj.GetComponent<CardMove>().IsMove){
         return true;
       }
     }
@@ -233,16 +233,17 @@ public class AI : MonoBehaviour {
   }
 
   public void Play(){
+    print(!IsMove());
     if (!IsMove()){
       if (ActionInHand() && player.Action > 0){
         PlayAction();
-    } else if (player.Purchase > 0 && BuyCard()){
-    } else{
+      } else if (player.Purchase > 0 && BuyCard()){
+      } else{
         if (gameObject.GetComponent<Player>().Turn){
           transform.GetComponentInParent<GameMaster>().NextPlayer();
-      }
+        }
         gameObject.GetComponent<Player>().EndTurn();
-    }
+      }
     }
 	}
 
