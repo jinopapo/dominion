@@ -7,15 +7,6 @@ public class AI : MonoBehaviour {
 
   Player player;
 
-  bool IsMove(){
-    foreach (var obj in player.field){
-      if (obj.GetComponent<CardMove>().IsMove){
-        return true;
-      }
-    }
-    return false;
-  }
-
   int  CountSupply(){
     Supply s = player.supply;
     int end = 0;
@@ -233,8 +224,7 @@ public class AI : MonoBehaviour {
   }
 
   public void Play(){
-    print(!IsMove());
-    if (!IsMove()){
+    if (!player.IsMove() && gameObject.GetComponent<PlayerDraw>().draw == 0){
       if (ActionInHand() && player.Action > 0){
         PlayAction();
       } else if (player.Purchase > 0 && BuyCard()){

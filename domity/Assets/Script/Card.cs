@@ -134,7 +134,7 @@ public class Card : MonoBehaviour {
   }
 
   public void Move(Vector3 position, float t = (float)0.5, bool local = true){
-    gameObject.GetComponent<CardMove>().Move(position, t, local);
+    gameObject.GetComponent<CardMove>().PositionUpdate(position, t, local);
   }
 
   public bool IsGet(Player buyer, bool isA, bool isM, bool isV){

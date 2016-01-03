@@ -8,7 +8,7 @@ public class Player : MonoBehaviour{
   [SerializeField] private Vector3 handPosition;
   [SerializeField] private Vector3 removePosition;
   [SerializeField] private Vector3 trashPosition;
-  [SerializeField] private Vector3 deckPosition;
+  [SerializeField] public Vector3 deckPosition;
   [SerializeField] GameObject copper;
   [SerializeField] GameObject mansion;
 
@@ -31,8 +31,6 @@ public class Player : MonoBehaviour{
   int actionMoney;
   int purchase;
   int cost;
-
-
 
   public bool Turn { get { return turn; } }
 
@@ -59,7 +57,6 @@ public class Player : MonoBehaviour{
     }
     return num;
   }
-
 
   void HandTrim(){
     foreach (var card in hands.Select((val,ind) => new {val,ind})) {
@@ -175,26 +172,35 @@ public class Player : MonoBehaviour{
     }
   }
 
-  public void Draw(int num){
-    for (int i = 0; i < num; i++) {
-      if (deck.Count == 0) {
-        if (trash.Count == 0)
-          continue;
-        foreach (var card in trash.Select((val,ind) => new {val,ind})) {
-          card.val.GetComponent<Card>().SetDeck(deckPosition);
-        }
-        deck.AddRange(trash);
-        deck = new List<GameObject>(deck.OrderBy(j => Guid.NewGuid()).ToArray());
-        trash.Clear();
+  public bool IsMove(){
+    foreach (var obj in trash){
+      if (obj.GetComponent<CardMove>().IsMove){
+        return true;
       }
-      hands.Add(deck[0]);
-      deck[0].GetComponent<Card>().DrawCard();
-      deck.RemoveAt(0);
-      CountMoney();
     }
+    foreach (var obj in field){
+      if (obj.GetComponent<CardMove>().IsMove){
+        return true;
+      }
+    }
+    foreach (var obj in hands){
+      if (obj.GetComponent<CardMove>().IsMove){
+        return true;
+      }
+    }
+    foreach (var obj in deck){
+      if (obj.GetComponent<CardMove>().IsMove){
+        return true;
+      }
+    }
+    return false;
   }
 
-  void CountMoney(){
+  public void Draw(int num){
+    gameObject.GetComponent<PlayerDraw>().draw += num;
+  }
+
+  public void CountMoney(){
     money = 0; 
     foreach (var obj in hands) {
       var card = obj.GetComponent<Card>();
@@ -397,6 +403,7 @@ public class Player : MonoBehaviour{
   void Update(){
     HandTrim();
     TrashUpdate();
+    gameObject.GetComponent<PlayerDraw>().DrawCard();
     RemoveUpdate();
   }
 
