@@ -5,9 +5,10 @@ using System.Linq;
 
 public class GameMaster : MonoBehaviour {
 
-	GameObject[] players;
+	public GameObject[] players;
 	public GameObject supply;
   [SerializeField] GameObject AI;
+  public GameObject canvas;
 	GameObject mainPlayer;
 	int nowPlayer;
   bool[] play;
@@ -20,6 +21,7 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	void Awake(){
+    canvas.SetActive(false);
 		players = new GameObject[4];
     play = new bool[4];
 		for (int i = 0; i < 4; i++) {
@@ -65,8 +67,8 @@ public class GameMaster : MonoBehaviour {
 		if (supply.GetComponent<Supply> ().IsEnd ()) {
       foreach (var p in players.Select((val,ind) => new {val,ind})) {
 				p.val.GetComponent<Player> ().EndTurn ();
-        print(p.ind.ToString() + " " + p.val.GetComponent<Player> ().CountVpoint ().ToString());
 			}
+      canvas.SetActive(true);
 		}
 	}
 }
