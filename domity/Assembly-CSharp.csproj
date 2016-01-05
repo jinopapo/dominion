@@ -51,12 +51,15 @@
      <Compile Include="Assets\Script\Card.cs" />
      <Compile Include="Assets\Script\CardInfo.cs" />
      <Compile Include="Assets\Script\CardManager.cs" />
+     <Compile Include="Assets\Script\CardMove.cs" />
      <Compile Include="Assets\Script\Cellar.cs" />
      <Compile Include="Assets\Script\Copper.cs" />
      <Compile Include="Assets\Script\GameMaster.cs" />
      <Compile Include="Assets\Script\Militia.cs" />
      <Compile Include="Assets\Script\Mine.cs" />
      <Compile Include="Assets\Script\Player.cs" />
+     <Compile Include="Assets\Script\PlayerDraw.cs" />
+     <Compile Include="Assets\Script\Ranking.cs" />
      <Compile Include="Assets\Script\Remodel.cs" />
      <Compile Include="Assets\Script\Silver.cs" />
      <Compile Include="Assets\Script\Supply.cs" />
